@@ -1,14 +1,16 @@
 <?php
-$hostName = "localhost";
-$dataBase = "adsbim1";
-$user = "root";
-$password = "";
-
-$mysqli = new mysqli($hostName, $user, $password, $dataBase);
-
-	if ($mysqli->connect_errno)
-	{
-	echo "Falha ao conectar:(" .$mysqli->connect_errno. "(" .$mysqli->connect_errno;
-	}
+include ('dbConfig.php');
 ?>
-
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Configurações - NewBank</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Configurações da Conta</h1>
+    <p>Aqui você pode alterar sua senha ou e-mail. (Simulado)</p>
+    <a href="painel.php">← Voltar ao Painel</a>
+</body>
+</html>
