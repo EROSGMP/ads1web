@@ -1,6 +1,17 @@
 <?php
 include ('dbConfig.php'); 
 session_start();
+
+// Session timeout: 20 minutes (1200 seconds)
+$timeout_duration = 1200;
+
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) > $timeout_duration) {
+    session_unset();
+    session_destroy();
+    header("Location: login.php?timeout=1");
+    exit();
+}
+$_SESSION['LAST_ACTIVITY'] = time();
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +47,8 @@ session_start();
                 if ($senha === $stored_password) {
                     $_SESSION['usuario'] = $nome;
                     $_SESSION['cpf'] = $cpf; 
+                    $_SESSION['senha'] = $senha;
+                    $_SESSION['LAST_ACTIVITY'] = time(); // update activity time on login
                     header("Location: painel.php");
                     exit();
                 } else {
@@ -46,6 +59,12 @@ session_start();
             }
 
             $stmt->close();
+        }
+        ?>
+
+        <?php
+        if (isset($_GET['timeout']) && $_GET['timeout'] == 1) {
+            echo '<p class="error-message">Sessão expirada por inatividade. Faça login novamente.</p>';
         }
         ?>
 

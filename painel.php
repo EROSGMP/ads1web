@@ -1,6 +1,21 @@
 <?php
 include ('dbConfig.php');
 session_start();
+
+
+// Buscar saldo do usuário logado
+$saldo = 0.0;
+if (isset($_SESSION['cpf'])) {
+    $cpf = $_SESSION['cpf'];
+    $stmt = $conn->prepare("SELECT total FROM emprestimo WHERE cpf = ?");
+    $stmt->bind_param("s", $cpf);
+    $stmt->execute();
+    $stmt->bind_result($total);
+    if ($stmt->fetch()) {
+        $saldo = $total;
+    }
+    $stmt->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -25,7 +40,12 @@ session_start();
         <div class="box">
             <h2>Olá, <?php echo htmlspecialchars($_SESSION['usuario']); ?>!</h2>
             <p>Saldo disponível:</p>
-            <div id="valor-saldo" class="saldo">R$ 1.000.000,00</div>
+            <div id="valor-saldo" class="saldo">
+
+                <?php
+                $saldo = 1000000.00 - $saldo;
+                 echo "R$ " . number_format($saldo, 2, ',', '.'); ?>
+            </div>
             <button class="toggle-btn" onclick="toggleSaldo()">Esconder saldo</button>
             <p style="margin-top: 25px;">Gerencie seus empréstimos com segurança e praticidade.</p>
         </div>

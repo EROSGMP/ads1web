@@ -1,8 +1,8 @@
 <?php
-include ('dbConfig.php');
-session_start();
-session_destroy();
-header("Location: login.php");
-exit;
+    include ('dbConfig.php');
+    session_start();
+    session_destroy();
+    header("Location: login.php");
+    exit;
 ?>
 
