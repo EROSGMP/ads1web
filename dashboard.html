@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NewBank</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="assets/css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <h1><i class="fas fa-university"></i> NewBank</h1>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">Início</a>
+                <span class="user-name" id="userName">Carregando...</span>
+                <button class="btn btn-secondary" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <main class="dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>Olá, <span id="clienteName">Cliente</span>!</h1>
+                <p>Gerencie seus empréstimos e simule novas opções</p>
+            </div>
+
+            <!-- Resumo -->
+            <section class="summary-cards">
+                <div class="summary-card">
+                    <div class="card-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Limite Disponível</h3>
+                        <p class="amount" id="limiteDisponivel">R$ 0,00</p>
+                        <small>Baseado na sua renda</small>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Empréstimos Ativos</h3>
+                        <p class="amount" id="emprestimosAtivos">0</p>
+                        <small>Contratos em andamento</small>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Simulações</h3>
+                        <p class="amount" id="totalSimulacoes">0</p>
+                        <small>Simulações realizadas</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ações Rápidas -->
+            <section class="quick-actions-section">
+                <h2>Ações Rápidas</h2>
+                <div class="quick-actions">
+                    <button class="action-button" onclick="novaSimulacao()">
+                        <i class="fas fa-calculator"></i>
+                        <span>Nova Simulação</span>
+                    </button>
+                    <button class="action-button" onclick="verEmprestimos()">
+                        <i class="fas fa-list"></i>
+                        <span>Meus Empréstimos</span>
+                    </button>
+                    <button class="action-button" onclick="atualizarDados()">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Atualizar Dados</span>
+                    </button>
+                    <button class="action-button" onclick="suporte()">
+                        <i class="fas fa-headset"></i>
+                        <span>Suporte</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Simulador Rápido -->
+            <section class="quick-simulator">
+                <h2>Simulador Rápido</h2>
+                <div class="simulator-card">
+                    <div class="simulator-inputs">
+                        <div class="input-group">
+                            <label>Valor desejado</label>
+                            <div class="input-wrapper">
+                                <span class="input-prefix">R$</span>
+                                <input type="number" id="valorRapido" placeholder="0,00" min="500" max="100000" step="100">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Prazo</label>
+                            <select id="prazoRapido">
+                                <option value="6">6 meses</option>
+                                <option value="12" selected>12 meses</option>
+                                <option value="18">18 meses</option>
+                                <option value="24">24 meses</option>
+                                <option value="36">36 meses</option>
+                                <option value="48">48 meses</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" onclick="simularRapido()">
+                            <i class="fas fa-calculator"></i> Simular
+                        </button>
+                    </div>
+                    <div class="result-quick" id="resultadoRapido" style="display: none;">
+                        <div class="result-item">
+                            <span>Parcela:</span>
+                            <span id="parcelaRapida" class="highlight">R$ 0,00</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Taxa:</span>
+                            <span id="taxaRapida">0,00% a.m.</span>
+                        </div>
+                        <button class="btn btn-success" onclick="solicitarRapido()">
+                            <i class="fas fa-check"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Empréstimos -->
+            <section class="loans-section">
+                <h2>Meus Empréstimos</h2>
+                <div class="loans-list" id="emprestimosList">
+                    <div class="no-data">
+                        <i class="fas fa-inbox"></i>
+                        <p>Nenhum empréstimo encontrado</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Histórico de Simulações -->
+            <section class="simulations-section">
+                <h2>Histórico de Simulações</h2>
+                <div class="simulations-list" id="simulacoesList">
+                    <div class="no-data">
+                        <i class="fas fa-calculator"></i>
+                        <p>Nenhuma simulação encontrada</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal de Atualização de Dados -->
+    <div id="updateModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('updateModal')">&times;</span>
+            <h2>Atualizar Dados</h2>
+            <form id="updateForm">
+                <div class="input-group">
+                    <label>Nome completo</label>
+                    <input type="text" id="updateNome" required>
+                </div>
+                <div class="input-group">
+                    <label>Telefone</label>
+                    <input type="tel" id="updateTelefone" required>
+                </div>
+                <div class="input-group">
+                    <label>Renda mensal</label>
+                    <input type="number" id="updateRenda" min="0" step="0.01" required>
+                </div>
+                <div class="input-group">
+                    <label>Endereço</label>
+                    <textarea id="updateEndereco" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Atualizar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html> 

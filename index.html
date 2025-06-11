@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewBank - Empréstimos Inteligentes</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <h1><i class="fas fa-university"></i> NewBank</h1>
+            </div>
+            <nav class="nav-menu">
+                <a href="#home" class="nav-link active">Início</a>
+                <a href="#simulador" class="nav-link">Simulador</a>
+                <a href="#sobre" class="nav-link">Sobre</a>
+                <a href="dashboard.html" class="nav-link dashboard-link" style="display: none;">Dashboard</a>
+                <a href="#" class="nav-link" onclick="showLogin()">Entrar</a>
+                <a href="#" class="btn btn-primary" onclick="showRegister()">Criar Conta</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Empréstimos sem complicação</h1>
+                    <p>Taxas justas, processo 100% digital e aprovação em minutos. Simule agora e descubra como é fácil realizar seus sonhos.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary btn-large" onclick="showSimulator()">
+                            <i class="fas fa-calculator"></i> Simular Empréstimo
+                        </button>
+                        <button class="btn btn-secondary btn-large" onclick="showRegister()">
+                            <i class="fas fa-user-plus"></i> Criar Conta
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="app-interface">
+                                <div class="app-header">
+                                    <span>NewBank</span>
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <div class="balance-card">
+                                    <h3>Limite disponível</h3>
+                                    <h2>R$ 50.000</h2>
+                                    <p>Taxa a partir de 1,99% a.m.</p>
+                                </div>
+                                <div class="quick-actions">
+                                    <div class="action-btn">
+                                        <i class="fas fa-money-bill"></i>
+                                        <span>Solicitar</span>
+                                    </div>
+                                    <div class="action-btn">
+                                        <i class="fas fa-calculator"></i>
+                                        <span>Simular</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulador Section -->
+    <section id="simulador" class="simulator-section">
+        <div class="container">
+            <h2>Simulador de Empréstimo</h2>
+            <div class="simulator-card">
+                <div class="simulator-inputs">
+                    <div class="input-group">
+                        <label>Quanto você precisa?</label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">R$</span>
+                            <input type="number" id="valor" placeholder="0,00" min="500" max="100000" step="100">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Em quantas vezes?</label>
+                        <select id="prazo">
+                            <option value="6">6 meses</option>
+                            <option value="12" selected>12 meses</option>
+                            <option value="18">18 meses</option>
+                            <option value="24">24 meses</option>
+                            <option value="36">36 meses</option>
+                            <option value="48">48 meses</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="simularEmprestimo()">
+                        <i class="fas fa-calculator"></i> Simular
+                    </button>
+                </div>
+                <div class="simulator-result" id="resultado" style="display: none;">
+                    <h3>Resultado da Simulação</h3>
+                    <div class="result-item">
+                        <span>Valor solicitado:</span>
+                        <span id="valorSolicitado">R$ 0,00</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Taxa de juros:</span>
+                        <span id="taxaJuros">0,00% a.m.</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Parcelas:</span>
+                        <span id="numParcelas">0x</span>
+                    </div>
+                    <div class="result-item highlight">
+                        <span>Valor da parcela:</span>
+                        <span id="valorParcela">R$ 0,00</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Valor total:</span>
+                        <span id="valorTotal">R$ 0,00</span>
+                    </div>
+                    <button class="btn btn-success" onclick="solicitarEmprestimo()">
+                        <i class="fas fa-check"></i> Solicitar Empréstimo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vantagens Section -->
+    <section class="advantages">
+        <div class="container">
+            <h2>Por que escolher o NewBank?</h2>
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Aprovação rápida</h3>
+                    <p>Análise automatizada em segundos. Sem burocracia, sem espera.</p>
+                </div>
+                <div class="advantage-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>100% seguro</h3>
+                    <p>Seus dados protegidos com a mais alta tecnologia de segurança.</p>
+                </div>
+                <div class="advantage-card">
+                    <i class="fas fa-percentage"></i>
+                    <h3>Taxas justas</h3>
+                    <p>As melhores taxas do mercado, transparentes e sem pegadinhas.</p>
+                </div>
+                <div class="advantage-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Tudo no app</h3>
+                    <p>Gerencie seus empréstimos direto do seu celular, onde e quando quiser.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Entrar na sua conta</h2>
+            
+            <!-- Contas de Teste -->
+            <div class="test-accounts">
+                <h3><i class="fas fa-flask"></i> Contas de Teste Disponíveis</h3>
+                <p><small>Use uma das contas abaixo para testar a plataforma:</small></p>
+                <div class="test-grid">
+                    <div class="test-account" onclick="fillLoginForm('joao@teste.com', '123456')">
+                        <strong>João Silva</strong>
+                        <span>Renda: R$ 5.000 • 1 empréstimo ativo</span>
+                        <small>joao@teste.com</small>
+                    </div>
+                    <div class="test-account" onclick="fillLoginForm('maria@teste.com', '123456')">
+                        <strong>Maria Santos</strong>
+                        <span>Renda: R$ 7.500 • 1 empréstimo ativo</span>
+                        <small>maria@teste.com</small>
+                    </div>
+                    <div class="test-account" onclick="fillLoginForm('pedro@teste.com', '123456')">
+                        <strong>Pedro Oliveira</strong>
+                        <span>Renda: R$ 3.500 • 1 empréstimo pendente</span>
+                        <small>pedro@teste.com</small>
+                    </div>
+                    <div class="test-account" onclick="fillLoginForm('ana@teste.com', '123456')">
+                        <strong>Ana Costa</strong>
+                        <span>Renda: R$ 8.500 • 1 empréstimo ativo</span>
+                        <small>ana@teste.com</small>
+                    </div>
+                    <div class="test-account" onclick="fillLoginForm('carlos@teste.com', '123456')">
+                        <strong>Carlos Ferreira</strong>
+                        <span>Renda: R$ 2.800 • 1 empréstimo rejeitado</span>
+                        <small>carlos@teste.com</small>
+                    </div>
+                    <div class="test-account" onclick="fillLoginForm('fernanda@teste.com', '123456')">
+                        <strong>Fernanda Lima</strong>
+                        <span>Renda: R$ 12.000 • Sem empréstimos</span>
+                        <small>fernanda@teste.com</small>
+                    </div>
+                </div>
+                <p class="password-info"><i class="fas fa-key"></i> <strong>Senha para todas as contas:</strong> 123456</p>
+            </div>
+            
+            <div class="divider">
+                <span>ou faça login manualmente</span>
+            </div>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <label>E-mail</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="input-group">
+                    <label>Senha</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Entrar</button>
+            </form>
+            <p class="modal-footer">
+                Não tem conta? <a href="#" onclick="showRegister()">Criar agora</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal de Cadastro -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h2>Criar sua conta</h2>
+            <form id="registerForm">
+                <div class="input-group">
+                    <label>Nome completo</label>
+                    <input type="text" id="nome" required>
+                </div>
+                <div class="input-group">
+                    <label>E-mail</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="input-group">
+                    <label>CPF</label>
+                    <input type="text" id="cpf" maxlength="14" required>
+                </div>
+                <div class="input-group">
+                    <label>Telefone</label>
+                    <input type="tel" id="telefone" required>
+                </div>
+                <div class="input-group">
+                    <label>Data de nascimento</label>
+                    <input type="date" id="dataNascimento" required>
+                </div>
+                <div class="input-group">
+                    <label>Renda mensal</label>
+                    <input type="number" id="rendaMensal" min="0" step="0.01" required>
+                </div>
+                <div class="input-group">
+                    <label>Senha</label>
+                    <input type="password" id="senha" required>
+                </div>
+                <div class="input-group">
+                    <label>Endereço</label>
+                    <textarea id="endereco" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Criar Conta</button>
+            </form>
+            <p class="modal-footer">
+                Já tem conta? <a href="#" onclick="showLogin()">Entrar</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>NewBank</h3>
+                    <p>Empréstimos inteligentes para pessoas inteligentes.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Produtos</h4>
+                    <ul>
+                        <li><a href="#">Empréstimo Pessoal</a></li>
+                        <li><a href="#">Crédito Consignado</a></li>
+                        <li><a href="#">Antecipação do 13º</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Suporte</h4>
+                    <ul>
+                        <li><a href="#">Central de Ajuda</a></li>
+                        <li><a href="#">Fale Conosco</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NewBank. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html> 
